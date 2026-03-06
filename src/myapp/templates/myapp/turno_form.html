@@ -1,0 +1,60 @@
+{% extends "myapp/base.html" %}
+
+{% block contenido %}
+
+<h2>Reservar Turno</h2>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <button type="submit" class="btn btn-dark mt-3">
+        Reservar
+    </button>
+</form>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const fechaInput = document.getElementById("id_fecha");
+        const horaSelect = document.getElementById("id_hora");
+
+        if (fechaInput && horaSelect) {
+            fechaInput.addEventListener("change", function() {
+                const fecha = this.value;
+                if (fecha) {
+                    fetch(`/turno/horarios-disponibles/?fecha=${fecha}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            horaSelect.innerHTML = ""; // Limpiar opciones
+                            if (data.horarios.length > 0) {
+                                data.horarios.forEach(hora => {
+                                    const option = document.createElement("option");
+                                    option.value = hora;
+                                    option.textContent = hora;
+                                    horaSelect.appendChild(option);
+                                });
+                            } else {
+                                const option = document.createElement("option");
+                                option.value = "";
+                                option.textContent = "Sin horarios disponibles";
+                                horaSelect.appendChild(option);
+                            }
+                        })
+                        .catch(error => console.error('Error fetching schedules:', error));
+                } else {
+                    horaSelect.innerHTML = "";
+                }
+            });
+            
+            // Disparar el evento change si ya hay una fecha pre-seleccionada
+            if (fechaInput.value) {
+                fechaInput.dispatchEvent(new Event("change"));
+            } else {
+                // Opción por defecto
+                horaSelect.innerHTML = '<option value="">Seleccione una fecha primero</option>';
+            }
+        }
+    });
+</script>
+
+{% endblock %}

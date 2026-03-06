@@ -1,14 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'myapp/base.html' %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ titulo }}</title>
-</head>
-
-<body>
-    <h1>{{ titulo }}</h1>
-</body>
-
-</html>
+{% block contenido %}
+    <h2>Bienvenido a la {{ titulo }}</h2>
+    <p>{{ descripcion }}</p>
+    <p>Selecciona una opción en el menú de arriba para comenzar.</p>
+{% endblock %}
