@@ -56,5 +56,5 @@ Sistema de gestión de turnos para barbería desarrollado con Python y Django. I
 
 **Martiniano Hereñu**
 - GitHub: [github.com/Martiherenu1](https://github.com/Martiherenu1)
-- Email: [martinianoherenu@gmail.com]`
+- Email: [martinianoherenu@gmail.com]
 ---
