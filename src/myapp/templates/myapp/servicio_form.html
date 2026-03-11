@@ -1,17 +1,41 @@
 {% extends "myapp/base.html" %}
 
 {% block contenido %}
-    <h2>{% if object %}Editar Servicio: {{ object.nombre }}{% else %}Añadir Nuevo Servicio{% endif %}</h2>
-    
-    <form method="post">
-        {% csrf_token %}
-        <table border="0">
-            {{ form.as_table }}
-        </table>
-        <br>
-        <button type="submit">{% if object %}Guardar Cambios{% else %}Crear Servicio{% endif %}</button>
-    </form>
-    
-    <br>
-    <a href="{% url 'lista_servicios' %}">Volver a la lista</a>
+<div class="row justify-content-center min-vh-75 align-items-center my-4">
+    <div class="col-md-8 col-lg-6">
+        <div class="card p-4 shadow-lg border-0">
+            <div class="card-body">
+                <div class="text-center mb-4">
+                    <i class="bi bi-scissors fs-1 text-gold mb-3 d-block"></i>
+                    <h2 class="card-title fw-bold font-playfair">
+                        {% if object %}Editar Servicio: {{ object.nombre }}{% else %}Añadir Nuevo Servicio{% endif %}
+                    </h2>
+                </div>
+                
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    
+                    <div class="d-flex gap-3 justify-content-between mt-5">
+                        <a href="{% url 'lista_servicios' %}" class="btn btn-outline-light px-4">Cancelar</a>
+                        <button type="submit" class="btn btn-gold px-4">
+                            {% if object %}Guardar Cambios{% else %}Crear Servicio{% endif %}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .min-vh-75 { min-height: 75vh; }
+    /* Estilizar el form de Django */
+    form p { text-align: left; margin-bottom: 1.2rem; }
+    form label { font-weight: 500; font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.3rem; display: block; }
+    form input, form textarea, form select { width: 100%; padding: 0.75rem 1rem; border-radius: 4px; border: 1px solid var(--border-subtle); background-color: var(--bg-secondary); color: var(--text-main); }
+    form input:focus, form textarea:focus, form select:focus { border-color: var(--accent-gold); outline: none; box-shadow: 0 0 0 0.25rem rgba(197, 160, 89, 0.25); }
+    .helptext { font-size: 0.8rem; color: #6c757d; display: block; margin-top: 0.25rem; }
+    .errorlist { color: var(--accent-red); list-style-type: none; padding-left: 0; font-size: 0.85rem; text-align: left; margin-bottom: 1rem; }
+</style>
 {% endblock %}

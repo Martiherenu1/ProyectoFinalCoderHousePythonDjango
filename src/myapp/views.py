@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, TemplateView
 from django.urls import reverse_lazy
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
@@ -179,3 +179,6 @@ class CambiarEstadoTurnoView(UserPassesTestMixin, View):
             turno.save()
             
         return redirect('admin_turnos')
+
+class AboutView(TemplateView):
+    template_name = "myapp/about.html"

@@ -1,7 +1,65 @@
 {% extends 'myapp/base.html' %}
 
 {% block contenido %}
-    <h2>Bienvenido a la {{ titulo }}</h2>
-    <p>{{ descripcion }}</p>
-    <p>Selecciona una opción en el menú de arriba para comenzar.</p>
+<div class="row min-vh-75 align-items-center py-5">
+    <div class="col-lg-6 text-center text-lg-start mb-5 mb-lg-0">
+        <h1 class="display-3 fw-bold mb-4">
+            TU ESTILO,<br>
+            <span class="text-gold">NUESTRO ARTE</span>
+        </h1>
+        <p class="lead text-muted mb-5">
+            Brindamos una experiencia premium de barbería tradicional y moderna. Relájate, disfruta y sal luciendo tu mejor versión.
+        </p>
+        
+        <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center justify-content-lg-start">
+            <a href="{% url 'crear_turno' %}" class="btn btn-gold btn-lg px-4 py-3">
+                <i class="bi bi-calendar2-check me-2"></i>Reservar Cita
+            </a>
+            <a href="{% url 'lista_servicios' %}" class="btn btn-outline-light btn-lg px-4 py-3">
+                Ver Servicios
+            </a>
+        </div>
+    </div>
+    
+    <div class="col-lg-6 position-relative">
+        <div class="rounded-circle bg-gold-glow position-absolute top-50 start-50 translate-middle" style="width: 400px; height: 400px; background: radial-gradient(circle, rgba(197,160,89,0.15) 0%, rgba(18,18,18,0) 70%); z-index: 0;"></div>
+        <img src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?q=80&w=2670&auto=format&fit=crop" 
+             alt="Barber Shop Interior" 
+             class="img-fluid rounded-4 shadow-lg position-relative" style="z-index: 1; border: 1px solid var(--border-subtle);">
+    </div>
+</div>
+
+<!-- Features Section -->
+<div class="row mt-5 pt-5 border-top border-dark g-4">
+    <div class="col-md-4 text-center">
+        <div class="p-4 rounded-4 bg-card h-100 border border-dark hover-lift">
+            <i class="bi bi-scissors fs-1 text-gold mb-3 d-block"></i>
+            <h4 class="fw-bold mb-3">Cortes Precisos</h4>
+            <p class="text-muted small">Técnicas modernas y clásicas adaptadas a la forma redonda de tu rostro y tu estilo personal.</p>
+        </div>
+    </div>
+    <div class="col-md-4 text-center">
+        <div class="p-4 rounded-4 bg-card h-100 border border-dark hover-lift">
+            <i class="bi bi-clock fs-1 text-gold mb-3 d-block"></i>
+            <h4 class="fw-bold mb-3">Sin Esperas</h4>
+            <p class="text-muted small">Reserva tu turno en línea 24/7 y te atenderemos exactamente a la hora acordada.</p>
+        </div>
+    </div>
+    <div class="col-md-4 text-center">
+        <div class="p-4 rounded-4 bg-card h-100 border border-dark hover-lift">
+            <i class="bi bi-cup-hot fs-1 text-gold mb-3 d-block"></i>
+            <h4 class="fw-bold mb-3">Experiencia VIP</h4>
+            <p class="text-muted small">Asesoramiento personalizado, productos premium y un ambiente diseñado para tu comodidad.</p>
+        </div>
+    </div>
+</div>
+
+<style>
+    .min-vh-75 { min-height: 75vh; }
+    .bg-card { background-color: var(--bg-card); transition: transform 0.3s ease, border-color 0.3s ease; }
+    .hover-lift:hover { 
+        transform: translateY(-5px);
+        border-color: var(--accent-gold) !important;
+    }
+</style>
 {% endblock %}
