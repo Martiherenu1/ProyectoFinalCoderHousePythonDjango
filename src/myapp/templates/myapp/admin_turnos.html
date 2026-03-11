@@ -1,0 +1,106 @@
+{% extends 'myapp/base.html' %}
+
+{% block contenido %}
+<div class="container mt-5">
+    <h2>Gestión de Turnos (Admin)</h2>
+    <hr>
+    
+    <!-- Filtro por fecha -->
+    <div class="card mb-4 shadow-sm border-0">
+        <div class="card-body bg-light rounded">
+            <form method="get" class="row g-3 align-items-center">
+                <div class="col-auto">
+                    <label for="fecha" class="col-form-label fw-bold">Filtrar por fecha:</label>
+                </div>
+                <div class="col-auto">
+                    <input type="date" name="fecha" id="fecha" class="form-control" value="{{ fecha_filtro }}">
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary">Filtrar</button>
+                    {% if fecha_filtro %}
+                        <a href="{% url 'admin_turnos' %}" class="btn btn-outline-secondary ms-2">Limpiar filtro</a>
+                    {% endif %}
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    {% if turnos %}
+        <div class="table-responsive">
+            <table class="table table-striped table-hover align-middle">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Hora</th>
+                        <th>Cliente</th>
+                        <th>Servicio</th>
+                        <th>Método Pago</th>
+                        <th>Estado Actual</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for turno in turnos %}
+                    <tr>
+                        <td>{{ turno.fecha|date:"d/m/Y" }}</td>
+                        <td>{{ turno.hora|time:"H:i" }}</td>
+                        <td>
+                            <strong>{{ turno.cliente.username }}</strong><br>
+                            <small class="text-muted">{{ turno.cliente.email }}</small>
+                        </td>
+                        <td>{{ turno.servicio.nombre }}</td>
+                        <td>{{ turno.get_metodo_pago_display }}</td>
+                        <td>
+                            {% if turno.estado == 'PENDIENTE' %}
+                                <span class="badge bg-warning text-dark">Pendiente</span>
+                            {% elif turno.estado == 'ATENDIDO' %}
+                                <span class="badge bg-success">Atendido</span>
+                            {% elif turno.estado == 'AUSENTE' %}
+                                <span class="badge bg-danger">Ausente</span>
+                            {% elif turno.estado == 'CANCELADO' %}
+                                <span class="badge bg-secondary">Cancelado</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <!-- Formularios para cambiar estado -->
+                            <div class="d-flex gap-1">
+                                {% if turno.estado != 'ATENDIDO' %}
+                                <form action="{% url 'cambiar_estado_turno' pk=turno.pk estado='ATENDIDO' %}" method="post" class="d-inline">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-success btn-sm" title="Marcar como Atendido">
+                                        ✓ Atendido
+                                    </button>
+                                </form>
+                                {% endif %}
+                                
+                                {% if turno.estado != 'AUSENTE' %}
+                                <form action="{% url 'cambiar_estado_turno' pk=turno.pk estado='AUSENTE' %}" method="post" class="d-inline">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger btn-sm" title="Marcar como Ausente">
+                                        ✗ Ausente
+                                    </button>
+                                </form>
+                                {% endif %}
+
+                                {% if turno.estado != 'CANCELADO' %}
+                                <form action="{% url 'cambiar_estado_turno' pk=turno.pk estado='CANCELADO' %}" method="post" class="d-inline">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-secondary btn-sm" title="Marcar como Cancelado">
+                                        ⊘ Cancelado
+                                    </button>
+                                </form>
+                                {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="alert alert-info">
+            No hay turnos registrados en el sistema en este momento.
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

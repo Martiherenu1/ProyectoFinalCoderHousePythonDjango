@@ -65,6 +65,15 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'crear_turno' %}">Reservar Turno</a>
                         </li>
+                        {% if user.is_staff %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'admin_turnos' %}">Turnos</a>
+                        </li>
+                        {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'mis_turnos' %}">Mis Turnos</a>
+                        </li>
+                        {% endif %}
                         <li class="nav-item">
                             <a class="nav-link" href="/admin/">Admin</a>
                         </li>

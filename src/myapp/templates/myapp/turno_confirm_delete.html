@@ -1,0 +1,23 @@
+{% extends 'myapp/base.html' %}
+
+{% block contenido %}
+<div class="container mt-5">
+    <h2>Cancelar Turno</h2>
+    <hr>
+    
+    <div class="alert alert-warning">
+        <p>¿Estás seguro que deseas cancelar tu turno para <strong>{{ object.servicio.nombre }}</strong>?</p>
+        <ul>
+            <li><strong>Fecha:</strong> {{ object.fecha|date:"d/m/Y" }}</li>
+            <li><strong>Hora:</strong> {{ object.hora|time:"H:i" }}</li>
+        </ul>
+        <p>Esta acción no se puede deshacer.</p>
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Sí, Cancelar Turno</button>
+        <a href="{% url 'mis_turnos' %}" class="btn btn-secondary">Volver a Mis Turnos</a>
+    </form>
+</div>
+{% endblock %}

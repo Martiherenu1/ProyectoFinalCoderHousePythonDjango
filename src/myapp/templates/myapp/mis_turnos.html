@@ -1,0 +1,42 @@
+{% extends 'myapp/base.html' %}
+
+{% block contenido %}
+<div class="container mt-5">
+    <h2>Mis Turnos</h2>
+    <hr>
+    
+    {% if turnos %}
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Hora</th>
+                        <th>Servicio</th>
+                        <th>Método de Pago</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for turno in turnos %}
+                    <tr>
+                        <td>{{ turno.fecha|date:"d/m/Y" }}</td>
+                        <td>{{ turno.hora|time:"H:i" }}</td>
+                        <td>{{ turno.servicio.nombre }}</td>
+                        <td>{{ turno.get_metodo_pago_display }}</td>
+                        <td>
+                            <a href="{% url 'cancelar_turno' turno.id %}" class="btn btn-danger btn-sm">Cancelar Turno</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="alert alert-info">
+            No tienes turnos reservados actualmente.
+        </div>
+        <a href="{% url 'crear_turno' %}" class="btn btn-primary">Reservar Turno</a>
+    {% endif %}
+</div>
+{% endblock %}

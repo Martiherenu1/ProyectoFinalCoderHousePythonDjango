@@ -1,7 +1,7 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
 from .views import RegisterView
-from .views import TurnoCreateView, get_horarios_disponibles
+from .views import TurnoCreateView, get_horarios_disponibles, MisTurnosListView, TurnoDeleteView, TurnosAdminListView, CambiarEstadoTurnoView
 from .views import (
     index,
     ServicioListView,
@@ -24,4 +24,9 @@ urlpatterns = [
     path("turno/nuevo/", TurnoCreateView.as_view(), name="crear_turno"),
     path("turno/horarios-disponibles/", get_horarios_disponibles, name="horarios_disponibles"),
 
+    path("mis-turnos/", MisTurnosListView.as_view(), name="mis_turnos"),
+    path("mis-turnos/<int:pk>/cancelar/", TurnoDeleteView.as_view(), name="cancelar_turno"),
+    
+    path("gestion-turnos/", TurnosAdminListView.as_view(), name="admin_turnos"),
+    path("gestion-turnos/<int:pk>/estado/<str:estado>/", CambiarEstadoTurnoView.as_view(), name="cambiar_estado_turno"),
 ]

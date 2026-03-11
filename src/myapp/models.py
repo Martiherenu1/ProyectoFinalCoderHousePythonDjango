@@ -21,6 +21,13 @@ class Turno(models.Model):
         ('TRANSFERENCIA', 'Transferencia'),
     ]
 
+    ESTADO_TURNO = [
+        ('PENDIENTE', 'Pendiente'),
+        ('ATENDIDO', 'Atendido'),
+        ('AUSENTE', 'Ausente'),
+        ('CANCELADO', 'Cancelado'),
+    ]
+
     cliente = models.ForeignKey(User, on_delete=models.CASCADE)
     servicio = models.ForeignKey(Servicio, on_delete=models.CASCADE)
 
@@ -28,6 +35,7 @@ class Turno(models.Model):
     hora = models.TimeField()
 
     metodo_pago = models.CharField(max_length=20, choices=METODO_PAGO)
+    estado = models.CharField(max_length=20, choices=ESTADO_TURNO, default='PENDIENTE')
 
     creado = models.DateTimeField(auto_now_add=True)
 
