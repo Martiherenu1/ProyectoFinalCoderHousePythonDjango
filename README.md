@@ -2,6 +2,10 @@
 
 Sistema de gestión de turnos para barbería desarrollado con Python y Django. Incluye autenticación de usuarios, gestión de servicios, reserva de turnos, panel de administración y diseño moderno con Bootstrap.
 
+## 🎥 Video demostración
+
+🔗https://youtu.be/J5sVn7YxePs
+
 ## 🚀 Características
 
 - **Funcionalidades**
